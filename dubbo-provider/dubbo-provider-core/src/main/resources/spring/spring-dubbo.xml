@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://code.alibabatech.com/schema/dubbo
+         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <context:property-placeholder location="classpath:/dubbo.properties" file-encoding="UTF-8" ignore-unresolvable="true"/>
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="spring-env"/>
+    <!-- 注册中心配置 -->
+    <dubbo:registry id="registry" address="${zookeeper.registry}"/>
+    <!-- 生成远程服务代理，可以和本地bean一样使用 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" host="${local.host}"/>
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="cn.com.env.base.service.IUserService" ref="userService"/>
+</beans>
